@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """ Starts Flask. """
 from flask import Flask
@@ -26,4 +25,4 @@ def c(phrase):
 
 if __name__ == '__main__':
     app.run()
-© 2021 GitHub, Inc.
+
