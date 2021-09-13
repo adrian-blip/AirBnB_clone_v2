@@ -1,25 +1,26 @@
 #!/usr/bin/python3
-"""importing flask and storage"""
-
-from flask import Flask
-from flask import render_template
-from models import State
+""" Start Flask!!! """
+from flask import Flask, render_template
 from models import storage
+from models import state
 
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
-
-
-@app.route('/states_list')
-def s_list():
-    states = storage.all(State).values()
-    return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
-def teardown(exception):
+def close_storage(self):
+    """ Removing SQLAlchemy Session """
     storage.close()
 
+
+@app.route('/states_list', strict_slashes=False)
+def h1():
+    """ Lists States """
+    s = list(storage.all('State').values())
+    s.sort(key=lambda state: state.name)
+    return render_template('7-states_list.html', slist=s)
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
